@@ -80,6 +80,13 @@ userRouter.post("/signin",async(req,res)=>{
             username: req.body.username,
             password:req.body.password
         });
+        const userId = user?._id;
+
+        const account = await Account.findOne({
+            userId
+        })
+
+        const userAccountInfo = account?.balance;
 
         if (user) {
             const token = jwt.sign({
@@ -88,7 +95,9 @@ userRouter.post("/signin",async(req,res)=>{
             const userId = user._id;
             return res.json({
                 token,
-                userId:userId
+                userId:userId,
+                userAccountInfo:userAccountInfo
+
             })
         }
         
