@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -52,4 +53,12 @@ export const HomePage = () => {
             </div>
         </div>
     );
+=======
+export const HomePage = () => {
+    return(
+        <div>
+            
+        </div>
+    );
+>>>>>>> 61fdff0a553d8ab22090404d4345fd223233ab3b
 }

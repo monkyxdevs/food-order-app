@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 
 export const Cart = () => {
@@ -77,4 +78,12 @@ export const Cart = () => {
             </div>
         </div>
     );
+=======
+export const Cart = () => {
+    return(
+        <div>
+            
+        </div>
+    );
+>>>>>>> 61fdff0a553d8ab22090404d4345fd223233ab3b
 }

@@ -105,11 +105,14 @@ userRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
             username: req.body.username,
             password: req.body.password
         });
+<<<<<<< HEAD
         const userId = user === null || user === void 0 ? void 0 : user._id;
         const account = yield db_1.Account.findOne({
             userId
         });
         const userAccountInfo = account === null || account === void 0 ? void 0 : account.balance;
+=======
+>>>>>>> 61fdff0a553d8ab22090404d4345fd223233ab3b
         if (user) {
             const token = jwt.sign({
                 userId: user._id
@@ -117,8 +120,12 @@ userRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
             const userId = user._id;
             return res.json({
                 token,
+<<<<<<< HEAD
                 userId: userId,
                 userAccountInfo: userAccountInfo
+=======
+                userId: userId
+>>>>>>> 61fdff0a553d8ab22090404d4345fd223233ab3b
             });
         }
     }
