@@ -145,3 +145,23 @@ userRouter.post("/wallet",async(req:Request,res:Response)=>{
         messsage:"Pin Created Successfully",
     })
 })
+
+userRouter.post("/wallet/pin",async(req:Request,res:Response)=>{
+    // const { success } = walletBody.safeParse(req.body)
+    // if (!success) {
+    //     return res.status(411).json({
+    //         message: "Error while updating information"
+    //     })
+    // }
+    const verify =await Wallet.findOne({
+        userId:req.body.userId,
+        pin:req.body.pin
+    })
+    if (verify) {
+        res.json({
+            messsage:"Pin Enter Correctly..",
+        })
+    }else{
+        res.json().status(403).send({error:"Pin is incorrext"})
+    }
+})

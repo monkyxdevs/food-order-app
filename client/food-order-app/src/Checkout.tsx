@@ -8,7 +8,7 @@ export const Checkout = () => {
     const [value, setValue] = useState("");
     const [finalPrice, setFinalPrice] = useState(totalPrice);
     const navigate = useNavigate();
-
+    localStorage.setItem("totalPricec",JSON.stringify(totalPrice));
     const userId = localStorage.getItem("userId")
     const handlePromoCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const input = e.target.value;
