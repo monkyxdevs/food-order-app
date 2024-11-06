@@ -35,20 +35,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.userRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const zod_1 = require("zod");
 const db_1 = require("../db");
 const jwt = __importStar(require("jsonwebtoken"));
 const config_1 = require("../config");
 const middleware_1 = require("../middleware");
-const userRouter = express_1.default.Router();
+exports.userRouter = express_1.default.Router();
 const signupBody = zod_1.z.object({
     username: zod_1.z.string().email(),
     password: zod_1.z.string(),
     firstName: zod_1.z.string(),
     lastName: zod_1.z.string(),
 });
-userRouter.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.userRouter.post("/signup", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = signupBody.safeParse(req.body);
         if (!result.success) {
@@ -93,7 +94,7 @@ const signinBody = zod_1.z.object({
     username: zod_1.z.string().email(),
     password: zod_1.z.string()
 });
-userRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.userRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { success } = signinBody.safeParse(req.body);
         if (!success) {
@@ -105,14 +106,11 @@ userRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
             username: req.body.username,
             password: req.body.password
         });
-<<<<<<< HEAD
         const userId = user === null || user === void 0 ? void 0 : user._id;
         const account = yield db_1.Account.findOne({
             userId
         });
         const userAccountInfo = account === null || account === void 0 ? void 0 : account.balance;
-=======
->>>>>>> 61fdff0a553d8ab22090404d4345fd223233ab3b
         if (user) {
             const token = jwt.sign({
                 userId: user._id
@@ -120,12 +118,8 @@ userRouter.post("/signin", (req, res) => __awaiter(void 0, void 0, void 0, funct
             const userId = user._id;
             return res.json({
                 token,
-<<<<<<< HEAD
                 userId: userId,
                 userAccountInfo: userAccountInfo
-=======
-                userId: userId
->>>>>>> 61fdff0a553d8ab22090404d4345fd223233ab3b
             });
         }
     }
@@ -139,10 +133,10 @@ const updateBody = zod_1.z.object({
     firstName: zod_1.z.string().optional(),
     lastName: zod_1.z.string().optional(),
 });
-userRouter.put("/", middleware_1.authenticateJWT, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.userRouter.put("/", middleware_1.authenticateJWT, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { success } = updateBody.safeParse(req.body);
     if (!success) {
-        res.status(411).json({
+        return res.status(411).json({
             message: "Error while updating information"
         });
     }
@@ -153,4 +147,21 @@ userRouter.put("/", middleware_1.authenticateJWT, (req, res) => __awaiter(void 0
         message: "Updated successfully"
     });
 }));
-exports.default = userRouter;
+const walletBody = zod_1.z.object({
+    pin: zod_1.z.number().optional()
+});
+exports.userRouter.post("/wallet", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // const { success } = walletBody.safeParse(req.body)
+    // if (!success) {
+    //     return res.status(411).json({
+    //         message: "Error while updating information"
+    //     })
+    // }
+    yield db_1.Wallet.create({
+        userId: req.body.userId,
+        pin: req.body.pin
+    });
+    res.json({
+        messsage: "Pin Created Successfully",
+    });
+}));

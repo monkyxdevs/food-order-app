@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = exports.Account = exports.Food = exports.db = void 0;
+exports.User = exports.Account = exports.Food = exports.Wallet = exports.db = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 exports.db = mongoose_1.default.connect("mongodb+srv://aksh:aksh%400908@atlascluster.zjyi9.mongodb.net/", { dbName: "food-order-app" }).then(() => {
     console.log("Connected to db...");
@@ -49,6 +49,19 @@ const AccountSchema = new mongoose_1.default.Schema({
         required: true
     }
 });
+const WalletSchema = new mongoose_1.default.Schema({
+    userId: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    pin: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 9999
+    }
+});
 const FoodSchema = new mongoose_1.default.Schema({
     foodName: {
         type: String,
@@ -71,6 +84,7 @@ const FoodSchema = new mongoose_1.default.Schema({
         default: true
     },
 });
+exports.Wallet = mongoose_1.default.model("Wallet", WalletSchema);
 exports.Food = mongoose_1.default.model("Food", FoodSchema);
 exports.Account = mongoose_1.default.model("Account", AccountSchema);
 exports.User = mongoose_1.default.model("User", UserSchema);

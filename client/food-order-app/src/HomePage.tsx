@@ -1,11 +1,11 @@
-<<<<<<< HEAD
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 export const HomePage = () => {
     const [searchParams] = useSearchParams();
     const [foods,setFoods] = useState([]);
     const [addFood,setAddfood] = useState<any[]>([]);
+    const navigate = useNavigate();
     function getFoods():any {
         axios.get("http://localhost:3000/api/m3/food/").then(res=>{
             setFoods(res.data);
@@ -50,15 +50,12 @@ export const HomePage = () => {
                       </div>
                     ))}
                 </div>
+                <div className="pt-10">
+                    <button onClick={()=>{
+                        navigate("/cart")
+                    }} className="text-white  bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">🛒</button>
+                </div>
             </div>
         </div>
     );
-=======
-export const HomePage = () => {
-    return(
-        <div>
-            
-        </div>
-    );
->>>>>>> 61fdff0a553d8ab22090404d4345fd223233ab3b
 }
