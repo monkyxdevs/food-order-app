@@ -147,16 +147,7 @@ exports.userRouter.put("/", middleware_1.authenticateJWT, (req, res) => __awaite
         message: "Updated successfully"
     });
 }));
-const walletBody = zod_1.z.object({
-    pin: zod_1.z.number().optional()
-});
 exports.userRouter.post("/wallet", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // const { success } = walletBody.safeParse(req.body)
-    // if (!success) {
-    //     return res.status(411).json({
-    //         message: "Error while updating information"
-    //     })
-    // }
     yield db_1.Wallet.create({
         userId: req.body.userId,
         pin: req.body.pin
@@ -166,22 +157,23 @@ exports.userRouter.post("/wallet", (req, res) => __awaiter(void 0, void 0, void 
     });
 }));
 exports.userRouter.post("/wallet/pin", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // const { success } = walletBody.safeParse(req.body)
-    // if (!success) {
-    //     return res.status(411).json({
-    //         message: "Error while updating information"
-    //     })
-    // }
-    const verify = yield db_1.Wallet.findOne({
-        userId: req.body.userId,
-        pin: req.body.pin
-    });
-    if (verify) {
-        res.json({
-            messsage: "Pin Enter Correctly..",
-        });
+    const { userId, pin } = req.body;
+    if (!userId || !pin) {
+        return res.status(400).json({ error: "userId and pin are required" });
     }
-    else {
-        res.json().status(403).send({ error: "Pin is incorrext" });
+    try {
+        const verify = yield db_1.Wallet.findOne({ userId, pin });
+        if (verify) {
+            res.json({
+                message: "Pin entered correctly.",
+            });
+        }
+        else {
+            res.status(403).json({ error: "Pin is incorrect or not created yet." });
+        }
+    }
+    catch (error) {
+        console.error("Error verifying pin:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 }));

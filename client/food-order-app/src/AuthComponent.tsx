@@ -20,7 +20,7 @@ export function InputBox({ label,placeholder,onChange }:any) {
     return (
         <div>
             <div className="text-sm font-medium text-left py-2 text-orange-400">{label}</div>
-            <input type="text" placeholder={placeholder} className="w-full border rounded border-slate-200" onChange={onChange}/>
+            <input type="text" placeholder={placeholder} className="w-full border rounded text-slate-400 bg-white" onChange={onChange}/>
         </div>
     );
 }

@@ -28,16 +28,14 @@ export const Signin = () => {
                             const data = res.data
                             localStorage.setItem("token",data.token);
                             localStorage.setItem("userId",data.userId);
-                            localStorage.setItem("balance",data.userAccountInfo);
-                            localStorage.setItem("balance",data.userAccountInfo);
                             navigate("/home?id="+ data.userId);
                         }
                     }).catch(err=>console.error("Something Error occured!",err)
                     )
                 }} />
                 <div>
-                    <div>Don't have an Account</div>
-                    <Link className="pointer underline pl-1 cursor-pointer" to={"/signup"}>
+                    <div className="text-gray-700">Don't have an Account</div>
+                    <Link className="pointer underline pl-1 cursor-pointer text-gray-800" to={"/signup"}>
                         Signin
                     </Link>
                     </div>
