@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import {Button, Heading,  InputBox,  SubHeading } from "./AuthComponent";
+import {Button, Heading,  InputBox,  SubHeading } from "./Components/AuthComponent";
 import axios from "axios";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
